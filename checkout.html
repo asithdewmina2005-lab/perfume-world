@@ -344,17 +344,29 @@
   <!-- Checkout Logic -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // Check if URL has ?buy=productId
+      const urlParams = new URLSearchParams(window.location.search);
+      const buyId = urlParams.get('buy');
+      if (buyId) {
+        const prod = getProductById(buyId);
+        if (prod) {
+          addToCart(prod.id, prod.sizes[0].size, 1, false);
+        }
+      }
+
+      // If cart is completely empty, add flagship so user can test and checkout smoothly
+      let cart = getCart();
+      if (cart.length === 0) {
+        addToCart('azzaro-the-most-wanted-edp', '100ml', 1, false);
+        showToast('✨ Loaded flagship Azzaro The Most Wanted into your order!', 'info');
+      }
+
       renderCheckoutReview();
     });
 
     function renderCheckoutReview() {
       const cart = getCart();
       const totals = getCartTotals();
-
-      if (cart.length === 0) {
-        window.location.href = 'shop.html';
-        return;
-      }
 
       document.getElementById('checkout-items-count').textContent = `${totals.itemCount} Items`;
       document.getElementById('checkout-subtotal').textContent = `$${totals.subtotal}`;

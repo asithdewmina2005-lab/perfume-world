@@ -332,8 +332,8 @@
         <a href="cart.html" class="py-3 px-4 text-center rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-medium text-xs uppercase tracking-wider transition border border-zinc-700">
           View Cart Page
         </a>
-        <a href="checkout.html" class="py-3 px-4 text-center rounded-xl bg-gold-gradient text-black font-semibold text-xs uppercase tracking-wider hover:opacity-90 transition flex items-center justify-center gap-1.5 shadow-lg shadow-gold-500/20">
-          <span>Checkout</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        <a href="checkout.html" class="py-3 px-4 text-center rounded-xl bg-gold-gradient text-black font-bold text-xs uppercase tracking-wider hover:opacity-90 transition flex items-center justify-center gap-1.5 shadow-lg shadow-gold-500/25">
+          <i class="fa-solid fa-bolt text-xs"></i> <span>BUY NOW (CHECKOUT)</span>
         </a>
       </div>
     </div>
@@ -519,14 +519,20 @@
               </div>
             </div>
 
-            <div class="mt-5 pt-3 border-t border-zinc-800/80 flex items-center justify-between">
-              <div>
-                <span class="text-lg font-bold text-gold-400">$${p.price.toFixed(2)}</span>
-                ${p.originalPrice ? `<span class="text-xs text-zinc-500 line-through ml-1.5">$${p.originalPrice.toFixed(2)}</span>` : ''}
+            <div class="mt-5 pt-3 border-t border-zinc-800/80 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-lg font-bold text-gold-400">$${p.price.toFixed(2)}</span>
+                  ${p.originalPrice ? `<span class="text-xs text-zinc-500 line-through ml-1.5">$${p.originalPrice.toFixed(2)}</span>` : ''}
+                </div>
+                <span class="text-[10px] text-emerald-400 font-semibold flex items-center gap-1"><i class="fa-solid fa-check text-[9px]"></i> Ready to Ship</span>
               </div>
-              <div class="flex items-center gap-2">
-                <button onclick="addToCart('${p.id}', '${p.sizes[0].size}', 1)" class="px-3.5 py-2 rounded-xl bg-gold-gradient text-black text-xs font-semibold tracking-wider transition hover:opacity-90 flex items-center gap-1.5 shadow-md shadow-amber-500/10">
-                  <i class="fa-solid fa-bag-shopping"></i> Add
+              <div class="grid grid-cols-2 gap-2">
+                <button onclick="openQuickBuyModal('${p.id}', '${p.sizes[0].size}')" class="py-2.5 px-2 rounded-xl bg-gold-gradient text-black font-bold text-xs uppercase tracking-wider transition hover:opacity-95 flex items-center justify-center gap-1 shadow-md shadow-amber-500/20">
+                  <i class="fa-solid fa-bolt text-[10px]"></i> Buy Now
+                </button>
+                <button onclick="addToCart('${p.id}', '${p.sizes[0].size}', 1)" class="py-2.5 px-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-700 font-semibold text-xs uppercase tracking-wider transition flex items-center justify-center gap-1">
+                  <i class="fa-solid fa-bag-shopping text-[10px]"></i> + Bag
                 </button>
               </div>
             </div>

@@ -97,8 +97,13 @@
           <a href="contact.html" class="hover:text-gold-400 transition pb-1">Boutiques</a>
         </nav>
 
-        <!-- Header Actions: Search, Wishlist, Cart -->
-        <div class="flex items-center space-x-5">
+        <!-- Header Actions: Buy Online, Search, Wishlist, Cart -->
+        <div class="flex items-center space-x-4">
+          <!-- Buy Online Direct Link -->
+          <a href="shop.html" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-gold-gradient text-black font-bold text-xs uppercase tracking-wider hover:opacity-90 shadow-md shadow-gold-500/20 transition">
+            <i class="fa-solid fa-bolt text-[11px]"></i> Buy Online
+          </a>
+
           <!-- Live Search Trigger -->
           <button class="open-search-modal text-zinc-300 hover:text-gold-400 transition p-2" title="Search Fragrance">
             <i class="fa-solid fa-magnifying-glass text-lg"></i>
@@ -170,14 +175,14 @@
           </p>
 
           <div class="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-            <a href="shop.html" class="w-full sm:w-auto px-8 py-4 bg-gold-gradient text-black font-semibold rounded-full tracking-wider uppercase text-xs hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] transition-all duration-300 flex items-center justify-center gap-3">
-              <span>Explore Collection</span>
-              <i class="fa-solid fa-arrow-right text-xs"></i>
+            <a href="shop.html" class="w-full sm:w-auto px-8 py-4 bg-gold-gradient text-black font-bold rounded-full tracking-wider uppercase text-xs hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] transition-all duration-300 flex items-center justify-center gap-2">
+              <i class="fa-solid fa-bag-shopping text-sm"></i>
+              <span>BUY ONLINE / SHOP ALL</span>
             </a>
-            <a href="product-detail.html?id=azzaro-the-most-wanted-edp" class="w-full sm:w-auto px-8 py-4 bg-zinc-900/80 hover:bg-zinc-800 text-zinc-200 border border-gold-500/30 rounded-full tracking-wider uppercase text-xs transition duration-300 flex items-center justify-center gap-2">
-              <i class="fa-solid fa-play text-gold-400 text-xs"></i>
-              <span>Discover Most Wanted</span>
-            </a>
+            <button onclick="openQuickBuyModal('azzaro-the-most-wanted-edp', '100ml')" class="w-full sm:w-auto px-8 py-4 bg-zinc-900/90 hover:bg-zinc-800 text-gold-300 border border-gold-500/50 rounded-full tracking-wider uppercase text-xs transition duration-300 flex items-center justify-center gap-2 shadow-lg">
+              <i class="fa-solid fa-bolt text-gold-400"></i>
+              <span>⚡ INSTANT BUY (1-CLICK ORDER)</span>
+            </button>
           </div>
 
           <!-- Trust Badges -->
@@ -219,7 +224,7 @@
                 <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80" alt="Azzaro The Most Wanted" class="h-80 sm:h-96 object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.9)] transform group-hover:scale-105 transition duration-500" />
               </div>
 
-              <!-- Bottle Metadata -->
+              <!-- Bottle Metadata & Direct Buy Buttons -->
               <div class="space-y-3 pt-4 border-t border-zinc-800">
                 <div class="flex justify-between items-baseline">
                   <div>
@@ -232,9 +237,14 @@
                   </div>
                 </div>
 
-                <button onclick="addToCart('azzaro-the-most-wanted-edp', '100ml', 1)" class="w-full py-3 bg-gold-gradient text-black font-semibold rounded-xl text-xs uppercase tracking-wider hover:opacity-95 transition flex items-center justify-center gap-2 shadow-lg shadow-gold-500/20">
-                  <i class="fa-solid fa-cart-plus"></i> Add To Bag Now
-                </button>
+                <div class="grid grid-cols-2 gap-2 pt-1">
+                  <button onclick="openQuickBuyModal('azzaro-the-most-wanted-edp', '100ml')" class="py-3 bg-gold-gradient text-black font-bold rounded-xl text-xs uppercase tracking-wider hover:opacity-95 transition flex items-center justify-center gap-1.5 shadow-lg shadow-gold-500/30">
+                    <i class="fa-solid fa-bolt text-xs"></i> ⚡ BUY NOW
+                  </button>
+                  <button onclick="addToCart('azzaro-the-most-wanted-edp', '100ml', 1)" class="py-3 bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 font-semibold rounded-xl text-xs uppercase tracking-wider transition flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-bag-shopping text-xs"></i> + Add To Bag
+                  </button>
+                </div>
               </div>
 
             </div>
@@ -674,8 +684,8 @@
         <a href="cart.html" class="py-3 px-4 text-center rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-medium text-xs uppercase tracking-wider transition border border-zinc-700">
           View Cart Page
         </a>
-        <a href="checkout.html" class="py-3 px-4 text-center rounded-xl bg-gold-gradient text-black font-semibold text-xs uppercase tracking-wider hover:opacity-90 transition flex items-center justify-center gap-1.5 shadow-lg shadow-gold-500/20">
-          <span>Checkout</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        <a href="checkout.html" class="py-3 px-4 text-center rounded-xl bg-gold-gradient text-black font-bold text-xs uppercase tracking-wider hover:opacity-90 transition flex items-center justify-center gap-1.5 shadow-lg shadow-gold-500/25">
+          <i class="fa-solid fa-bolt text-xs"></i> <span>BUY NOW (CHECKOUT)</span>
         </a>
       </div>
     </div>
@@ -754,21 +764,30 @@
               <p class="text-xs text-zinc-500 mt-2 line-clamp-2">${p.description}</p>
             </div>
 
-            <div class="mt-5 pt-3 border-t border-zinc-800/80 flex items-center justify-between">
-              <div>
-                <span class="text-lg font-bold text-gold-400">$${p.price.toFixed(2)}</span>
-                ${p.originalPrice ? `<span class="text-xs text-zinc-500 line-through ml-1.5">$${p.originalPrice.toFixed(2)}</span>` : ''}
+            <div class="mt-5 pt-3 border-t border-zinc-800/80 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-lg font-bold text-gold-400">$${p.price.toFixed(2)}</span>
+                  ${p.originalPrice ? `<span class="text-xs text-zinc-500 line-through ml-1.5">$${p.originalPrice.toFixed(2)}</span>` : ''}
+                </div>
+                <span class="text-[10px] text-emerald-400 font-semibold flex items-center gap-1"><i class="fa-solid fa-circle text-[6px]"></i> In Stock</span>
               </div>
-              <button onclick="addToCart('${p.id}', '${p.sizes[0].size}', 1)" class="px-3.5 py-2 rounded-xl bg-zinc-800 hover:bg-gold-500 hover:text-black text-gold-400 text-xs font-semibold tracking-wider transition flex items-center gap-1.5">
-                <i class="fa-solid fa-cart-plus"></i> Add
-              </button>
+
+              <div class="grid grid-cols-2 gap-2">
+                <button onclick="openQuickBuyModal('${p.id}', '${p.sizes[0].size}')" class="py-2.5 px-2 rounded-xl bg-gold-gradient text-black font-bold text-xs uppercase tracking-wider transition hover:opacity-95 flex items-center justify-center gap-1 shadow-md shadow-amber-500/20">
+                  <i class="fa-solid fa-bolt text-[10px]"></i> Buy Now
+                </button>
+                <button onclick="addToCart('${p.id}', '${p.sizes[0].size}', 1)" class="py-2.5 px-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-700 font-semibold text-xs uppercase tracking-wider transition flex items-center justify-center gap-1">
+                  <i class="fa-solid fa-bag-shopping text-[10px]"></i> + Bag
+                </button>
+              </div>
             </div>
           </div>
         </div>
       `).join('');
     }
 
-    function filterScentFinder(family) {
+    function filterScentFinder(family, btnElement) {
       const container = document.getElementById('finder-results-grid');
       const buttons = document.querySelectorAll('.finder-btn');
       if (!container) return;
@@ -777,8 +796,9 @@
         b.className = 'finder-btn px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider bg-zinc-900 border border-zinc-700 text-zinc-300 hover:border-gold-400 transition';
       });
 
-      // Highlight active button
-      event && event.target && (event.target.className = 'finder-btn active px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider bg-gold-500 text-black transition');
+      if (btnElement) {
+        btnElement.className = 'finder-btn active px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider bg-gold-500 text-black transition';
+      }
 
       let products = getAllProducts();
       if (family !== 'all') {
@@ -788,14 +808,19 @@
 
       container.innerHTML = products.map(p => `
         <div class="flex items-center gap-3 p-3 rounded-xl bg-zinc-900/70 border border-zinc-800 hover:border-gold-500/30 transition">
-          <img src="${p.image}" alt="${p.name}" class="w-16 h-20 object-contain rounded-lg bg-zinc-950 p-1" />
-          <div class="flex-1">
+          <img src="${p.image}" alt="${p.name}" class="w-16 h-20 object-contain rounded-lg bg-zinc-950 p-1 shrink-0" />
+          <div class="flex-1 min-w-0">
             <span class="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">${p.fragranceFamily}</span>
-            <h4 class="font-serif text-white font-medium text-xs leading-tight">${p.name}</h4>
-            <div class="text-xs font-bold text-amber-300 mt-1">$${p.price.toFixed(2)}</div>
-            <button onclick="addToCart('${p.id}', '${p.sizes[0].size}', 1)" class="mt-2 text-[11px] text-zinc-300 hover:text-gold-400 font-semibold flex items-center gap-1">
-              <i class="fa-solid fa-plus text-[9px]"></i> Quick Add
-            </button>
+            <h4 class="font-serif text-white font-medium text-xs leading-tight truncate">${p.name}</h4>
+            <div class="text-xs font-bold text-amber-300 mt-0.5">$${p.price.toFixed(2)}</div>
+            <div class="flex items-center gap-2 mt-2">
+              <button onclick="openQuickBuyModal('${p.id}', '${p.sizes[0].size}')" class="px-2.5 py-1 bg-gold-gradient text-black font-bold text-[10px] uppercase tracking-wider rounded-lg hover:opacity-90 flex items-center gap-1 shadow">
+                <i class="fa-solid fa-bolt text-[8px]"></i> Buy Now
+              </button>
+              <button onclick="addToCart('${p.id}', '${p.sizes[0].size}', 1)" class="px-2 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-[10px] font-medium rounded-lg">
+                + Bag
+              </button>
+            </div>
           </div>
         </div>
       `).join('');

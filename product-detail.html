@@ -210,28 +210,34 @@
           </div>
         </div>
 
-        <!-- Quantity & Add to Cart -->
+        <!-- Quantity & Buy / Add Buttons -->
         <div class="space-y-3 pt-2">
           <div class="flex items-center gap-4">
             <!-- Quantity Counter -->
-            <div class="flex items-center border border-zinc-700 rounded-xl bg-zinc-900 overflow-hidden">
+            <div class="flex items-center border border-zinc-700 rounded-xl bg-zinc-900 overflow-hidden shrink-0">
               <button onclick="changeQty(-1)" class="w-10 h-12 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800 text-base font-semibold transition">-</button>
               <span id="detail-qty" class="w-12 text-center text-white font-bold text-sm">1</span>
               <button onclick="changeQty(1)" class="w-10 h-12 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800 text-base font-semibold transition">+</button>
             </div>
 
-            <!-- Add To Bag Button -->
-            <button id="detail-add-btn" onclick="handleDetailAddToCart()" class="flex-1 py-3.5 px-6 bg-gold-gradient text-black font-semibold rounded-xl text-xs uppercase tracking-wider hover:opacity-90 transition flex items-center justify-center gap-2 shadow-lg shadow-gold-500/20">
-              <i class="fa-solid fa-bag-shopping text-sm"></i>
-              <span>Add To Luxury Bag</span>
+            <!-- Prominent BUY NOW Button -->
+            <button onclick="handleDetailInstantOrderModal()" class="flex-1 py-3.5 px-6 bg-gold-gradient text-black font-bold rounded-xl text-xs uppercase tracking-wider hover:opacity-95 transition flex items-center justify-center gap-2 shadow-xl shadow-gold-500/30">
+              <i class="fa-solid fa-bolt text-sm"></i>
+              <span>⚡ BUY NOW / දැන් මිලදී ගන්න</span>
             </button>
           </div>
 
-          <!-- Instant Checkout Button -->
-          <button onclick="handleDetailInstantBuy()" class="w-full py-3.5 px-6 bg-zinc-900 hover:bg-zinc-800 border border-gold-500/40 text-gold-300 font-semibold rounded-xl text-xs uppercase tracking-wider transition flex items-center justify-center gap-2">
-            <i class="fa-solid fa-bolt text-xs text-gold-400"></i>
-            <span>Instant Buy & Checkout</span>
-          </button>
+          <!-- Secondary Actions -->
+          <div class="grid grid-cols-2 gap-3">
+            <button id="detail-add-btn" onclick="handleDetailAddToCart()" class="py-3 px-4 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 font-semibold rounded-xl text-xs uppercase tracking-wider transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-bag-shopping text-gold-400"></i>
+              <span>+ Add To Bag</span>
+            </button>
+            <button onclick="handleDetailInstantBuy()" class="py-3 px-4 bg-zinc-900 hover:bg-zinc-800 border border-gold-500/40 text-gold-300 font-semibold rounded-xl text-xs uppercase tracking-wider transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-credit-card text-gold-400"></i>
+              <span>Full Checkout Page →</span>
+            </button>
+          </div>
         </div>
 
         <!-- Scent Performance Meters -->
@@ -468,7 +474,7 @@
 
       // Scent pyramid
       document.getElementById('detail-top-notes').innerHTML = p.topNotes.map(n => `<p class="font-medium text-zinc-200">${n}</p>`).join('');
-      document.getElementById('detail-heartNotes' in document ? 'detail-heartNotes' : 'detail-heart-notes').innerHTML = p.heartNotes.map(n => `<p class="font-medium text-zinc-200">${n}</p>`).join('');
+      document.getElementById('detail-heart-notes').innerHTML = p.heartNotes.map(n => `<p class="font-medium text-zinc-200">${n}</p>`).join('');
       document.getElementById('detail-base-notes').innerHTML = p.baseNotes.map(n => `<p class="font-medium text-zinc-200">${n}</p>`).join('');
 
       // Sizes
@@ -495,9 +501,14 @@
             <h4 class="font-serif text-white font-bold text-sm mt-0.5"><a href="product-detail.html?id=${rp.id}">${rp.name}</a></h4>
             <div class="flex justify-between items-center mt-3 pt-2 border-t border-zinc-800">
               <span class="text-sm font-bold text-gold-400">$${rp.price.toFixed(2)}</span>
-              <button onclick="addToCart('${rp.id}', '${rp.sizes[0].size}', 1)" class="px-2.5 py-1 text-xs bg-zinc-800 hover:bg-gold-500 hover:text-black rounded-lg transition text-zinc-300">
-                + Add
-              </button>
+              <div class="flex items-center gap-1.5">
+                <button onclick="openQuickBuyModal('${rp.id}', '${rp.sizes[0].size}')" class="px-2.5 py-1 text-xs bg-gold-gradient text-black font-bold rounded-lg transition hover:opacity-90">
+                  ⚡ Buy
+                </button>
+                <button onclick="addToCart('${rp.id}', '${rp.sizes[0].size}', 1)" class="px-2 py-1 text-xs bg-zinc-800 hover:bg-zinc-700 rounded-lg transition text-zinc-300">
+                  + Bag
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -532,6 +543,11 @@
       document.getElementById('detail-qty').textContent = selectedQuantity;
     }
 
+    function handleDetailInstantOrderModal() {
+      if (!currentProduct) return;
+      openQuickBuyModal(currentProduct.id, selectedSize);
+    }
+
     function handleDetailAddToCart() {
       if (!currentProduct) return;
       addToCart(currentProduct.id, selectedSize, selectedQuantity);
@@ -539,7 +555,7 @@
 
     function handleDetailInstantBuy() {
       if (!currentProduct) return;
-      addToCart(currentProduct.id, selectedSize, selectedQuantity);
+      addToCart(currentProduct.id, selectedSize, selectedQuantity, false);
       window.location.href = 'checkout.html';
     }
   </script>
